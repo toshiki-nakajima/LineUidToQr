@@ -26,7 +26,16 @@
       font-size: 16px;
       border-radius: 5px;
       cursor: pointer;
-      margin: 10px 0;
+      margin: 10px 5px;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .logout-button {
+      background-color: #ff4d4d;
     }
     #uidDisplay {
       font-size: 14px;
@@ -50,7 +59,10 @@
   <p>あなたのLINE UID:</p>
   <div id="uidDisplay"></div>
   <div id="qrContainer"></div>
-  <button id="saveButton">QRコードを保存</button>
+  <div class="button-container">
+    <button id="saveButton">QRコードを保存</button>
+    <button id="logoutButton" class="logout-button">ログアウト</button>
+  </div>
 </div>
 
 <!-- LIFF SDK -->
@@ -100,6 +112,9 @@
 
         // 保存ボタンのイベント設定
         document.getElementById('saveButton').addEventListener('click', saveQRCode);
+
+        // ログアウトボタンのイベント設定
+        document.getElementById('logoutButton').addEventListener('click', logoutFromLiff);
       }).catch((error) => {
         console.error("プロフィール取得エラー", error);
         alert("ユーザー情報の取得に失敗しました。");
@@ -134,6 +149,20 @@
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+    };
+
+    // ログアウト関数
+    const logoutFromLiff = () => {
+      if (liff.isLoggedIn()) {
+        if (confirm('ログアウトしますか？')) {
+          liff.logout();
+          document.getElementById('uidContainer').classList.add('hidden');
+          document.getElementById('liffLoginContainer').classList.remove('hidden');
+          console.log('LINEからログアウトしました');
+        }
+      } else {
+        alert('ログインしていません');
+      }
     };
 
     // LIFF SDKの読み込み完了後に初期化
