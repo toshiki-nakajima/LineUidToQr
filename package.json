@@ -1,0 +1,9 @@
+{
+  "name": "liff-uid-qr",
+  "version": "1.0.0",
+  "description": "LIFF UID QRコードジェネレーター",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {}
+}
