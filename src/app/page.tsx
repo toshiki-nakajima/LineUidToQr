@@ -9,6 +9,7 @@ export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState('');
   const [isLiffLoaded, setIsLiffLoaded] = useState(false);
+  const [isFriend, setIsFriend] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -18,9 +19,14 @@ export default function Home() {
         const liffInitialized = await liffConfig.initializeLiff();
         if (liffInitialized) {
           setIsLiffLoaded(true);
-          
+
           // 既にログインしている場合
           if (liffConfig.checkLogin()) {
+            const isFriend = await liffConfig.checkIsFriend();
+            if (!isFriend) {
+              setIsFriend(false);
+              return;
+            }
             setIsLoggedIn(true);
             await getUserProfile();
           }
@@ -63,19 +69,19 @@ export default function Home() {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       const img = new Image();
-      
+
       img.onload = () => {
         canvas.width = img.width;
         canvas.height = img.height;
         ctx?.drawImage(img, 0, 0);
         const pngFile = canvas.toDataURL('image/png');
-        
+
         const downloadLink = document.createElement('a');
         downloadLink.download = 'line-uid-qr.png';
         downloadLink.href = pngFile;
         downloadLink.click();
       };
-      
+
       img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
     }
   };
@@ -87,16 +93,16 @@ export default function Home() {
   return (
     <main>
       <h1>LINE UID QRコード</h1>
-      
-      {!isLoggedIn ? (
+
+      {isFriend ? (!isLoggedIn ? (
         <LiffLogin onLogin={handleLogin} isLoaded={isLiffLoaded} />
       ) : (
-        <LiffUser 
-          userId={userId} 
-          onLogout={handleLogout} 
-          onSaveQR={saveQRCode} 
+        <LiffUser
+          userId={userId}
+          onLogout={handleLogout}
+          onSaveQR={saveQRCode}
         />
-      )}
+      )) : (<div>友達追加してください</div>)}
     </main>
   );
 }
