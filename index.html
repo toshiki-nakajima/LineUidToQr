@@ -83,9 +83,9 @@
 
         // 既にログインしている場合
         if (liff.isLoggedIn()) {
-          // liff.getFriendship().then((result) => {
-          //   console.log("友達追加状態", result);
-          // });
+          liff.getFriendship().then((result) => {
+            console.log("友達追加状態", result);
+          });
           displayUidAndQR();
         } else {
           // ログインボタンのイベント設定
