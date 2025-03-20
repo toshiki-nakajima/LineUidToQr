@@ -5,5 +5,7 @@
   "scripts": {
     "build": "node build.js"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@line/liff": "^2.25.1"
+  }
 }
