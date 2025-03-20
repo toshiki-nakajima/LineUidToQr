@@ -55,9 +55,9 @@
 
 <!-- LIFF SDK -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/versions/2.22.3/sdk.js"></script>
 
 <script>
-  import liff from '@line/liff';
   document.addEventListener('DOMContentLoaded', function() {
     // LIFF初期化
     const initializeLiff = () => {
@@ -71,9 +71,9 @@
 
         // 既にログインしている場合
         if (liff.isLoggedIn()) {
-          liff.getFriendship().then((result) => {
-            console.log("友達追加状態", result);
-          });
+          // liff.getFriendship().then((result) => {
+          //   console.log("友達追加状態", result);
+          // });
           displayUidAndQR();
         } else {
           // ログインボタンのイベント設定

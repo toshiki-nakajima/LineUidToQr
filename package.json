@@ -4,8 +4,5 @@
   "description": "LIFF UID QRコードジェネレーター",
   "scripts": {
     "build": "node build.js"
-  },
-  "dependencies": {
-    "@line/liff": "^2.25.1"
   }
 }
