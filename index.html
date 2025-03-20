@@ -70,7 +70,17 @@
 
         // 既にログインしている場合
         if (liff.isLoggedIn()) {
-          displayUidAndQR();
+          liff.getFrinedship().then((data) => {
+            if (data.friendFlag) {
+              displayUidAndQR();
+            } else {
+              alert("友達追加してください");
+            }
+          }).catch((error) => {
+            console.error("友達追加チェックエラー", error);
+            alert("友達追加チェックに失敗しました。");
+          });
+          // displayUidAndQR();
         } else {
           // ログインボタンのイベント設定
           document.getElementById('liffLoginButton').addEventListener('click', () => {
