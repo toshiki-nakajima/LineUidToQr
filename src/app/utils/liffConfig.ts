@@ -22,6 +22,16 @@ export const checkLogin = (): boolean => {
   return liff.isLoggedIn();
 };
 
+export const checkIsFriend = async (): Promise<boolean> => {
+    try {
+        const isFriend = await liff.getFriendship();
+        return isFriend.friendFlag;
+    } catch (error) {
+        console.error('友達追加状態取得エラー', error);
+        return false;
+    }
+}
+
 export const login = (): void => {
   liff.login();
 };
