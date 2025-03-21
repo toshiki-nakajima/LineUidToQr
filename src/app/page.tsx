@@ -97,7 +97,7 @@ export default function Home() {
     <main>
       <h1>LINE UID QRコード</h1>
 
-      {!isFriend ? (!isLoggedIn ? (
+      {isFriend ? (!isLoggedIn ? (
         <LiffLogin onLogin={handleLogin} isLoaded={isLiffLoaded} />
       ) : (
         <LiffUser
