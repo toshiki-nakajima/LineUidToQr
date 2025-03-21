@@ -1,6 +1,6 @@
 import React from 'react';
 
-const accountName = process.env.REACT_APP_ACCOUNT_NAME || '';
+const accountName = process.env.NEXT_PUBLIC_ACCOUNT_NAME || '';
 const add_friend_url = `https://line.me/R/ti/p/${encodeURIComponent(accountName)}`;
 
 const handleAddFriend = () => {
