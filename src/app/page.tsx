@@ -6,11 +6,14 @@ import LiffUser from '@/components/LiffUser';
 import * as liffConfig from './utils/liffConfig';
 import AddFriend from "@/components/AddFriend";
 
+const DONT_KNOW_FRIEND = 'dontKnowFriend';
+const IS_FRIEND = 'isFriend';
+const IS_NOT_FRIEND = 'isNotFriend';
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState('');
   const [isLiffLoaded, setIsLiffLoaded] = useState(false);
-  const [isFriend, setIsFriend] = useState(true);
+  const [isFriend, setIsFriend] = useState(DONT_KNOW_FRIEND);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -25,11 +28,10 @@ export default function Home() {
           if (liffConfig.checkLogin()) {
             const isFriend = await liffConfig.checkIsFriend();
             if (!isFriend) {
-              console.log("You are not my friend");
-              setIsFriend(false);
+              setIsFriend(IS_NOT_FRIEND);
               return;
             }
-            console.log("You art my friend");
+            setIsFriend(IS_FRIEND)
             setIsLoggedIn(true);
             await getUserProfile();
           }
@@ -55,11 +57,11 @@ export default function Home() {
 
   const handleLogin = async () => {
     liffConfig.login();
-    const isFriend = await liffConfig.checkIsFriend();
-    if (!isFriend) {
-      setIsFriend(false);
-      return;
-    }
+    // const isFriend = await liffConfig.checkIsFriend();
+    // if (!isFriend) {
+    //   setIsFriend(false);
+    //   return;
+    // }
     setIsLoggedIn(true);
   };
 
@@ -103,15 +105,18 @@ export default function Home() {
     <main>
       <h1>LINE UID QRコード</h1>
 
-      {isFriend ? (!isLoggedIn ? (
-        <LiffLogin onLogin={handleLogin} isLoaded={isLiffLoaded} />
-      ) : (
-        <LiffUser
-          userId={userId}
-          onLogout={handleLogout}
-          onSaveQR={saveQRCode}
-        />
-      )) : (<AddFriend/>)}
+      {!isLoggedIn
+          ? (<LiffLogin onLogin={handleLogin} isLoaded={isLiffLoaded} />)
+          : isFriend === DONT_KNOW_FRIEND
+              ? (<div>友達追加状態を取得中...</div>)
+              : isFriend === IS_NOT_FRIEND
+                  ? (<AddFriend/>)
+                  : (<LiffUser
+                      userId={userId}
+                      onLogout={handleLogout}
+                      onSaveQR={saveQRCode}
+                  />)
+      }
     </main>
   );
 }
