@@ -24,9 +24,11 @@ export default function Home() {
           if (liffConfig.checkLogin()) {
             const isFriend = await liffConfig.checkIsFriend();
             if (!isFriend) {
+              console.log("You are not my friend");
               setIsFriend(false);
               return;
             }
+            console.log("You art my friend");
             setIsLoggedIn(true);
             await getUserProfile();
           }
