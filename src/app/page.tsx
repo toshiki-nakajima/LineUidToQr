@@ -57,7 +57,7 @@ export default function Home() {
 
   const handleLogin = async () => {
     liffConfig.login();
-    setIsLoggedIn(true);
+    // setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
