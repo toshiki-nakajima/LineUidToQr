@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import LiffLogin from '@/components/LiffLogin';
 import LiffUser from '@/components/LiffUser';
 import * as liffConfig from './utils/liffConfig';
+import AddFriend from "@/components/AddFriend";
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -96,7 +97,7 @@ export default function Home() {
     <main>
       <h1>LINE UID QRコード</h1>
 
-      {isFriend ? (!isLoggedIn ? (
+      {!isFriend ? (!isLoggedIn ? (
         <LiffLogin onLogin={handleLogin} isLoaded={isLiffLoaded} />
       ) : (
         <LiffUser
@@ -104,7 +105,7 @@ export default function Home() {
           onLogout={handleLogout}
           onSaveQR={saveQRCode}
         />
-      )) : (<div>友達追加してください</div>)}
+      )) : (<AddFriend/>)}
     </main>
   );
 }
