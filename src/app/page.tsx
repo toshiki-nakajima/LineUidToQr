@@ -68,7 +68,6 @@ export default function Home() {
   const handleLogout = () => {
     if (confirm('ログアウトしますか？')) {
       liffConfig.logout();
-      setIsFriend(DONT_KNOW_FRIEND);
       setIsLoggedIn(false);
       setUserId('');
     }
