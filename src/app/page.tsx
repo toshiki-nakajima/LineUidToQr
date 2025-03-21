@@ -51,8 +51,14 @@ export default function Home() {
     }
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     liffConfig.login();
+    const isFriend = await liffConfig.checkIsFriend();
+    if (!isFriend) {
+      setIsFriend(false);
+      return;
+    }
+    setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
